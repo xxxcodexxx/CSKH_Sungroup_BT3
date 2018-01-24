@@ -7,40 +7,77 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Apartments", "Index", "Apartments")</li>
-                    <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
-                    <li>@Html.ActionLink("CardSOL", "Index", "CardSOLs")</li>
+<body class="skin-red-light sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index2.html" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <!-- <span class="logo-mini"><b>A</b>LT</span> -->
+                <!-- logo for regular state and mobile devices -->
+                <!-- <span class="logo-lg"><b>Admin</b>LTE</span> -->
+                <img src="https://portal.sungroup.com.vn/Themes/PropertyTrackTheme/dist/img/logo.png" />
+            </a>
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only"></span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>Nguyen Thanh Don</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">MAIN NAVIGATION</li>
+                    <li><a href="@Url.Action("Index", "Home" ) "><i class="fa fa-fw fa-home"></i><span>Home</span></a></li>
+                    <li><a href="@Url.Action("About", "Home" ) "><i class="fa fa-fw fa-home"></i><span>About</span></a></li>
+                    <li><a href="@Url.Action("Contact", "Home" ) "><i class="fa fa-fw fa-home"></i><span>Contact</span></a></li>
+                    <li><a href="@Url.Action("Index", "Apartments" ) "><i class="fa fa-fw fa-home"></i><span>Apartments</span></a></li>
+                    <li><a href="@Url.Action("Index", "Customers" ) "><i class="fa fa-fw fa-home"></i><span>Customers</span></a></li>
+                    <li><a href="@Url.Action("Index", "CardSOLs" ) "><i class="fa fa-fw fa-home"></i><span>CardSOLs</span></a></li>
                 </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <div class="content-wrapper">
+            <div class="container">
+                @RenderBody()
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
+        <footer class="main-footer">
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/AdminLTEjs")
+        @RenderSection("scripts", required: false)
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

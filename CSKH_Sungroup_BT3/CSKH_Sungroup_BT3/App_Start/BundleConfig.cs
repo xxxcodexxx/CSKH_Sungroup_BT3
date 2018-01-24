@@ -23,9 +23,12 @@ namespace CSKH_Sungroup_BT3
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/AdminLTEjs").Include(
+                      "~/Scripts/AdminLTE/adminlte.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css", "~/Content/AdminLTE/AdminLTE.min.css", "~/Content/font-awesome/css/font-awesome.min.css", "~/Content/Skins/skin-red-light.min.css"));
         }
     }
 }
