@@ -37,6 +37,30 @@ namespace CSKH_Sungroup_BT3.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
+        //Add new Customer
+
+        public JsonResult Save()
+        {
+            string result = "";
+            Customer customer = new Customer();
+            customer.FirstName = Request["fName"];
+            customer.LastName = Request["lName"];
+            customer.Passport = int.Parse(Request["cmnd"]);
+            customer.PhoneNumber = int.Parse(Request["pNumber"]);
+            customer.Address = Request["address"];
+            customer.Email = Request["email"];
+            if (ModelState.IsValid)
+            {
+                db.Customers.Add(customer);
+                db.SaveChanges();
+                result = "Success";
+            }
+            else
+                result = "Failed";
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Customers/Details/5
         public ActionResult Details(int? id)
         {
