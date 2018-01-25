@@ -3,10 +3,10 @@
 @{
     ViewBag.Title = "Khách hàng";
 }
-<div class="content">
+<div class="content" ng-app="CustomerService" ng-controller="Customer">
     <div class="row">
         <div class="col-sm-4">
-            <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm..."/>
+            <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm..." ng-model="search"/>
         </div>
         <div class="col-sm-8">
             <div class="pull-right">
@@ -17,7 +17,7 @@
         <div class="modal fade" id="addNewCustomer" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form>
+                    <form ng-submit="save()">
                         <div class="modal-header">
                             <button class="close" data-dissmiss="modal">×</button>
                             <h4>Thêm mới khách hàng</h4>
@@ -27,11 +27,11 @@
                                 <div class="col-sm-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Họ đệm</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" ng-model="$scope.item.firstName" required />
                                     </div>
                                     <div class="form-group">
                                         <label>CMND/Hộ chiếu</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" ng-model="$scope.item.CMND" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Tài khoản</label>
@@ -41,15 +41,15 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tên</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" ng-model="$scope.item.lastName" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Đối tượng</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>Nhóm</label>
-                                        <input type="text" class="form-control" />
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" ng-model="$scope.item.email" required/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -58,12 +58,12 @@
                                         <input type="text" class="form-control" />
                                     </div>
                                     <div class="form-group">
-                                        <label>Mã số thuế</label>
-                                        <input type="text" class="form-control" />
+                                        <label>Số điện thoại</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.phoneNumber" />
                                     </div>
                                     <div class="form-group">
                                         <label>Địa chỉ</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" ng-model="$scope.item.address" required/>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                 </th>
             </tr>
 
-            @foreach (var item in Model)
+            @*@foreach (var item in Model)
             {
                 <tr>
                     <td>
@@ -126,17 +126,37 @@
                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                     </td>
                 </tr>
-            }
+            }*@
 
-            @*<tr>
-                <td>
-
-                </td>
-            </tr>*@
+            <tr ng-repeat="item in items|filter : search" ng-dblclick="edit({{item.Id}})">
+                <td>{{item.FirstName}} {{item.LastName}}</td>
+                <td>{{item.Passport}}</td>
+                <td>{{item.Address}}</td>
+                <td>{{item.Email}}</td>
+                <td>{{item.PhoneNumber}}</td>
+                <td>@*<a ng-click="edit({{item.Id}})"><i class="fa fa-pencil"></i></a> <a ng-click="detail({{item.Id}})"><i class="fa fa-book"></i></a> <a ng-click="remove({{item.Id}})"><i class="fa fa-times"></i></a>*@</td>
+            </tr>
 
         </table>
     </div>
 </div>
 <script>
-
+    var app = angular.module("CustomerService", [])
+    app.controller("Customer", function ($scope, $http) {
+        $http.get("/Customers/GetAllCustomers").then(function (res) {
+            debugger;
+            $scope.items = res.data;
+        })
+        $scope.save = function () {
+            $scope.item;
+            debugger;
+            $http({
+                method: "POST",
+                url: "/Customers/Save",
+                data: $scope.item
+            }).success(function (res) {
+                console.log(res);
+            })
+        }
+    });
 </script>
