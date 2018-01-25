@@ -1,4 +1,6 @@
 
 CSKH_Sungroup_BT3/CSKH_Sungroup_BT3/Web.config
-CSKH_Sungroup_BT3/CSKH_Sungroup_BT3/obj
-CSKH_Sungroup_BT3/CSKH_Sungroup_BT3/bin
+CSKH_Sungroup_BT3/CSKH_Sungroup_BT3/obj/*
+CSKH_Sungroup_BT3/CSKH_Sungroup_BT3/bin/*
+bin
+obj
