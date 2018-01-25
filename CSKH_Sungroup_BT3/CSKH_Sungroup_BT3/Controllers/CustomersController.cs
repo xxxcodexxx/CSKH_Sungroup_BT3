@@ -20,6 +20,23 @@ namespace CSKH_Sungroup_BT3.Controllers
             return View(db.Customers.ToList());
         }
 
+        //GET : Customers using Json
+        public JsonResult GetAllCustomers()
+        {
+            var result = db.Customers.Select(x => 
+                new {
+                    x.Id,
+                    x.FirstName,
+                    x.LastName,
+                    x.Passport,
+                    x.PhoneNumber,
+                    x.Address,
+                    x.Email
+
+            }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Customers/Details/5
         public ActionResult Details(int? id)
         {

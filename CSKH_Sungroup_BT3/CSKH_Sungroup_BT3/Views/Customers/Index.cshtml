@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Khách hàng";
 }
-<div class="content">
+<div class="content" ng-app="CustomerService" ng-controller="Customer">
     <div class="row">
         <div class="col-sm-4">
             <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm..."/>
@@ -102,7 +102,7 @@
                 </th>
             </tr>
 
-            @foreach (var item in Model)
+            @*@foreach (var item in Model)
             {
                 <tr>
                     <td>
@@ -126,17 +126,29 @@
                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                     </td>
                 </tr>
-            }
+            }*@
 
-            @*<tr>
-                <td>
-
-                </td>
-            </tr>*@
+            <tr ng-repeat="item in items" ng-dblclick="edit({{item.Id}})">
+                <td>{{item.FirstName}} {{item.LastName}}</td>
+                <td>{{item.Passport}}</td>
+                <td>{{item.Address}}</td>
+                <td>{{item.Email}}</td>
+                <td>{{item.PhoneNumber}}</td>
+                <td><a ng-click="edit({{item.Id}})"><i class="fa fa-pencil"></i></a> <a ng-click="detail({{item.Id}})"><i class="fa fa-book"></i></a> <a ng-click="remove({{item.Id}})"><i class="fa fa-times"></i></a></td>
+            </tr>
 
         </table>
     </div>
 </div>
 <script>
-
+    var app = angular.module("CustomerService", [])
+    app.controller("Customer", function ($scope, $http) {
+        $http.get("/Customers/GetAllCustomers").then(function (res) {
+            debugger;
+            $scope.items = res.data;
+            $scope.edit() = function(id){
+                debugger;
+            }
+        })
+    });
 </script>
