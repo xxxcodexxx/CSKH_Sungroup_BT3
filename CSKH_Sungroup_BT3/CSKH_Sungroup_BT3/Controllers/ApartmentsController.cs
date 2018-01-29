@@ -19,6 +19,44 @@ namespace CSKH_Sungroup_BT3.Controllers
         {
             return View(db.Apartments.ToList());
         }
+        //GET : Customers using Json
+        public JsonResult GetAllApartments()
+        {
+            var result = db.Apartments.Select(x =>
+                new {
+                    x.Id,
+                    x.ApartmentName,
+                    x.Status,
+                    x.Price,
+                    x.CustomerId
+         
+                }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //Add new Customer
+
+        public JsonResult Save()
+        {
+            string result = "";
+            Apartment apartment = new Apartment();
+            apartment.ApartmentName = Request["fName"];
+            apartment.Address = Request["lName"];
+            apartment.Price = int.Parse(Request["cmnd"]);
+            apartment.CustomerId = int.Parse(Request["pNumber"]);
+            apartment.Status = false;
+            if (ModelState.IsValid)
+            {
+                db.Apartments.Add(apartment);
+                db.SaveChanges();
+                result = "Success";
+            }
+            else
+                result = "Failed";
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
         // GET: Apartments/Details/5
         public ActionResult Details(int? id)

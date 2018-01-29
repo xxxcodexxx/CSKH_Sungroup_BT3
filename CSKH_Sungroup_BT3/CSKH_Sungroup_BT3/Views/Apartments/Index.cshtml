@@ -1,57 +1,149 @@
 ﻿@model IEnumerable<CSKH_Sungroup_BT3.Models.Apartment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Căn hộ";
 }
 
-<h2>Index</h2>
+<h2>Căn hộ</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ApartmentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CustomerId)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApartmentName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
 
-</table>
+<div class="content" ng-app="Apartments" ng-controller="ApartmentsCtrl">
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm..." ng-model="search" />
+        </div>
+        <div class="col-sm-8">
+            <div class="pull-right">
+                <button type="button" class="btn btn-warning" data-target="#addNewApartments" data-toggle="modal"><i class="fa fa-plus"></i>Thêm mới căn hộ</button>
+                <button type="button" class="btn btn-primary" style="margin-left:15px" data-target="#sendMailToAllUsers" data-toggle="modal"><i class="fa fa-send"></i>Gửi mail cho khách hàng</button>
+            </div>
+        </div>
+        <div class="modal fade" id="addNewApartments" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form ng-submit="save()">
+                        <div class="modal-header">
+                            <button class="close" data-dissmiss="modal">×</button>
+                            <h4>Thêm mới căn hộ</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Tên căn hộ</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.ApartmentName" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Địa chỉ</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.Address" required />
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Id chủ sở hữu</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.CustomerId" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Giá</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.Price" required />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="pull-right">
+                                <button data-dissmiss="modal" class="btn btn-secondary">Hủy</button>
+                                <button type="submit" class="btn btn-primary">Tạo mới</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:20px">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApartmentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerId)
+                </th>
+                <th>
+                   
+                </th>
+            </tr>
+
+            @*@foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApartmentName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                        </td>
+                    </tr>
+                }*@
+            <tr ng-repeat="item in items|filter : search" ng-dblclick="edit({{item.Id}})">
+                <td>{{item.ApartmentName}}</td>
+                <td>{{item.Address}}</td>
+                <td>    if {{item.Status}} == false then 
+                        "Chưa thuê"
+                        else "Đã thuê"
+                 </td>
+                <td>{{item.Price}}</td>
+                <td>{{item.CustomerId}}</td>
+                <td>@*<a ng-click="edit({{item.Id}})"><i class="fa fa-pencil"></i></a> <a ng-click="detail({{item.Id}})"><i class="fa fa-book"></i></a> <a ng-click="remove({{item.Id}})"><i class="fa fa-times"></i></a>*@</td>
+            </tr>
+
+        </table>
+   </div>
+  
+  </div>
+<script>
+    var app = angular.module("Apartments", [])
+    app.controller("ApartmentsCtrl", function ($scope, $http) {
+        $http.get("/Apartments/GetAllApartments").then(function (res) {
+            debugger;
+            $scope.items = res.data;
+        })
+        $scope.save = function () {
+            $scope.item;
+            debugger;
+            $http({
+                method: "POST",
+                url: "/Apartments/Save",
+                data: $scope.item
+            }).success(function (res) {
+                console.log(res);
+            })
+        }
+    });
+</script>
