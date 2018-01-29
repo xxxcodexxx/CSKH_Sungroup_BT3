@@ -4,3 +4,5 @@ CSKH_Sungroup_BT3/CSKH_Sungroup_BT3/obj/*
 CSKH_Sungroup_BT3/CSKH_Sungroup_BT3/bin/*
 bin
 obj
+*.suo
+*.user
