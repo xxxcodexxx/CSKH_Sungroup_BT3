@@ -3,144 +3,146 @@
 @{
     ViewBag.Title = "Khách hàng";
 }
-<div ng-controller="CustomerCtrl">
-<div class="content">
-    <div class="row">
-        <div class="col-sm-4">
-            <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm..." ng-model="search"/>
-        </div>
-        <div class="col-sm-8">
-            <div class="pull-right">
-                <button type="button" class="btn btn-warning" data-target="#addNewCustomer" data-toggle="modal"><i class="fa fa-plus"></i>Thêm mới khách hàng</button>
-                <button type="button" class="btn btn-primary" style="margin-left:15px" data-target="#sendMailToAllUsers" data-toggle="modal"><i class="fa fa-send"></i>Gửi mail cho khách hàng</button>
-            </div>
-        </div>
-        <div class="modal fade" id="addNewCustomer" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form>
-                        <div class="modal-header">
-                            <button class="close" data-dissmiss="modal">×</button>
-                            <h4>Thêm mới khách hàng</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Họ đệm</label>
-                                        <input type="text" class="form-control" ng-show="a" ng-model="customer.FirstName" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>CMND/Hộ chiếu</label>
-                                        <input type="text" class="form-control" ng-show="a" ng-model="customer.Passport" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tài khoản</label>
-                                        <input type="text" class="form-control" />
+<div ng-app="CustomerApp">
+    <div ng-controller="CustomerCtrl">
+        <div class="content">
+            <div class="row">
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm..." ng-model="search" />
+                </div>
+                <div class="col-sm-8">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-warning" data-target="#addNewCustomer" data-toggle="modal"><i class="fa fa-plus"></i>Thêm mới khách hàng</button>
+                        <button type="button" class="btn btn-primary" style="margin-left:15px" data-target="#sendMailToAllUsers" data-toggle="modal"><i class="fa fa-send"></i>Gửi mail cho khách hàng</button>
+                    </div>
+                </div>
+                <div class="modal fade" id="addNewCustomer" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form>
+                                <div class="modal-header">
+                                    <button class="close" data-dissmiss="modal">×</button>
+                                    <h4>Thêm mới khách hàng</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <div class="form-group">
+                                                <label>Họ đệm</label>
+                                                <input type="text" class="form-control" ng-show="a" ng-model="customer.FirstName" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>CMND/Hộ chiếu</label>
+                                                <input type="text" class="form-control" ng-show="a" ng-model="customer.Passport" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tài khoản</label>
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Tên</label>
+                                                <input type="text" class="form-control" ng-show="a" ng-model="customer.LastName" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Đối tượng</label>
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="email" class="form-control" ng-model="customer.Email" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Số điện thoại</label>
+                                                <input type="text" class="form-control" ng-model="customer.PhoneNumber" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Địa chỉ</label>
+                                                <input type="text" class="form-control" ng-model="customer.Address" required />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Tên</label>
-                                        <input type="text" class="form-control" ng-show="a" ng-model="customer.LastName" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Đối tượng</label>
-                                        <input type="text" class="form-control"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control"  ng-model="customer.Email" required/>
+                                <div class="modal-footer">
+                                    <div class="pull-right">
+                                        <button data-dissmiss="modal" class="btn btn-secondary">Hủy</button>
+                                        <button type="submit" class="btn btn-primary" ng-click="addCustomer(customer)">Tạo mới</button>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Số điện thoại</label>
-                                        <input type="text" class="form-control"  ng-model="customer.PhoneNumber" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Địa chỉ</label>
-                                        <input type="text" class="form-control"  ng-model="customer.Address" required/>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                        <div class="modal-footer">
-                            <div class="pull-right">
-                                <button data-dissmiss="modal" class="btn btn-secondary">Hủy</button>
-                                <button type="submit" class="btn btn-primary" ng-click="addCustomer(customer)">Tạo mới</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
+            <div style="margin-top:20px">
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>
+                            Họ và tên
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Passport)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Address)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                        </th>
+                        <th>
+                            Thao tác
+                        </th>
+                    </tr>
+                    <tr ng-repeat="cus in customers">
+                        <td>
+                            {{cus.Id}}
+                        </td>
+                        <td>{{cus.FirstName}} {{cus.LastName}}</td>
+                        <td ng-show="a">
+                            <input type="text" ng-model="cus.Passport" />
+                        </td>
+                        <td ng-hide="a">
+                            {{cus.Passport}}
+                        </td>
+                        <td ng-show="a">
+                            <input type="text" ng-model="cus.Address" />
+                        </td>
+                        <td ng-hide="a">
+                            {{cus.Address}}
+                        </td>
+                        <td ng-show="a">
+                            <input type="text" ng-model="cus.Email" />
+                        </td>
+                        <td ng-hide="a">
+                            {{cus.Email}}
+                        </td>
+                        <td ng-show="a">
+                            <input type="text" ng-model="cus.PhoneNumber" />
+                        </td>
+                        <td ng-hide="a">
+                            {{cus.PhoneNumber}}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-hide="a" ng-click="a=!a">Edit</button>
+
+                            <button class="btn btn-primary" ng-show="a" ng-click="updateCustomer(cus)">Update</button>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-primary" ng-show="a" ng-click="a=!a">Cancle</button>
+                            <button class="btn btn-primary" ng-hide="a" ng-click="deleteCustomer(cus, $index)">Delete</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-    <div style="margin-top:20px">
-        <table class="table table-striped">
-            <tr>
-                <th>ID</th>
-                <th>
-                    Họ và tên
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Passport)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    Thao tác
-                </th>
-            </tr>
-            <tr ng-repeat="cus in customers">
-                <td>
-                    {{cus.Id}}
-                </td>
-                <td>{{cus.FirstName}} {{cus.LastName}}</td>
-                <td ng-show="a">
-                    <input type="text" ng-model="cus.Passport" />
-                </td>
-                <td ng-hide="a">
-                    {{cus.Passport}}
-                </td>
-                <td ng-show="a">
-                    <input type="text" ng-model="cus.Address" />
-                </td>
-                <td ng-hide="a">
-                    {{cus.Address}}
-                </td>
-                <td ng-show="a">
-                    <input type="text" ng-model="cus.Email" />
-                </td>
-                <td ng-hide="a">
-                    {{cus.Email}}
-                </td>
-                <td ng-show="a">
-                    <input type="text" ng-model="cus.PhoneNumber" />
-                </td>
-                <td ng-hide="a">
-                    {{cus.PhoneNumber}}
-                </td>
-                <td>
-                    <button class="btn btn-primary" ng-hide="a" ng-click="a=!a">Edit</button>
-                    
-                    <button class="btn btn-primary" ng-show="a" ng-click="updateCustomer(cus)">Update</button>
-                </td>
-                
-                <td>
-                    <button class="btn btn-primary" ng-show="a" ng-click="a=!a">Cancle</button>
-                    <button class="btn btn-primary" ng-hide="a" ng-click="deleteCustomer(cus, $index)" >Delete</button>
-                </td>
-            </tr>
-        </table>
-    </div>
 </div>
-    </div>
 
