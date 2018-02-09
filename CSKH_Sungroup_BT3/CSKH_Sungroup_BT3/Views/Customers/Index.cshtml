@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Khách hàng";
 }
-<div class="content" ng-app="CustomerService" ng-controller="Customer">
+<div ng-controller="CustomerCtrl">
+<div class="content">
     <div class="row">
         <div class="col-sm-4">
             <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm..." ng-model="search"/>
@@ -17,7 +18,7 @@
         <div class="modal fade" id="addNewCustomer" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form ng-submit="save()">
+                    <form>
                         <div class="modal-header">
                             <button class="close" data-dissmiss="modal">×</button>
                             <h4>Thêm mới khách hàng</h4>
@@ -27,11 +28,11 @@
                                 <div class="col-sm-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Họ đệm</label>
-                                        <input type="text" class="form-control" ng-model="$scope.item.firstName" required />
+                                        <input type="text" class="form-control" ng-show="a" ng-model="customer.FirstName" required />
                                     </div>
                                     <div class="form-group">
                                         <label>CMND/Hộ chiếu</label>
-                                        <input type="text" class="form-control" ng-model="$scope.item.CMND" required/>
+                                        <input type="text" class="form-control" ng-show="a" ng-model="customer.Passport" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Tài khoản</label>
@@ -41,7 +42,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tên</label>
-                                        <input type="text" class="form-control" ng-model="$scope.item.lastName" required/>
+                                        <input type="text" class="form-control" ng-show="a" ng-model="customer.LastName" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Đối tượng</label>
@@ -49,21 +50,17 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" ng-model="$scope.item.email" required/>
+                                        <input type="email" class="form-control"  ng-model="customer.Email" required/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Tài khoản ngân hàng</label>
-                                        <input type="text" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
                                         <label>Số điện thoại</label>
-                                        <input type="text" class="form-control" ng-model="$scope.item.phoneNumber" />
+                                        <input type="text" class="form-control"  ng-model="customer.PhoneNumber" />
                                     </div>
                                     <div class="form-group">
                                         <label>Địa chỉ</label>
-                                        <input type="text" class="form-control" ng-model="$scope.item.address" required/>
+                                        <input type="text" class="form-control"  ng-model="customer.Address" required/>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +68,7 @@
                         <div class="modal-footer">
                             <div class="pull-right">
                                 <button data-dissmiss="modal" class="btn btn-secondary">Hủy</button>
-                                <button type="submit" class="btn btn-primary">Tạo mới</button>
+                                <button type="submit" class="btn btn-primary" ng-click="addCustomer(customer)">Tạo mới</button>
                             </div>
                         </div>
                     </form>
@@ -82,6 +79,7 @@
     <div style="margin-top:20px">
         <table class="table table-striped">
             <tr>
+                <th>ID</th>
                 <th>
                     Họ và tên
                 </th>
@@ -101,62 +99,48 @@
                     Thao tác
                 </th>
             </tr>
-
-            @*@foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)&nbsp;@Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Passport)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
-                </tr>
-            }*@
-
-            <tr ng-repeat="item in items|filter : search" ng-dblclick="edit({{item.Id}})">
-                <td>{{item.FirstName}} {{item.LastName}}</td>
-                <td>{{item.Passport}}</td>
-                <td>{{item.Address}}</td>
-                <td>{{item.Email}}</td>
-                <td>{{item.PhoneNumber}}</td>
-                <td>@*<a ng-click="edit({{item.Id}})"><i class="fa fa-pencil"></i></a> <a ng-click="detail({{item.Id}})"><i class="fa fa-book"></i></a> <a ng-click="remove({{item.Id}})"><i class="fa fa-times"></i></a>*@</td>
+            <tr ng-repeat="cus in customers">
+                <td>
+                    {{cus.Id}}
+                </td>
+                <td>{{cus.FirstName}} {{cus.LastName}}</td>
+                <td ng-show="a">
+                    <input type="text" ng-model="cus.Passport" />
+                </td>
+                <td ng-hide="a">
+                    {{cus.Passport}}
+                </td>
+                <td ng-show="a">
+                    <input type="text" ng-model="cus.Address" />
+                </td>
+                <td ng-hide="a">
+                    {{cus.Address}}
+                </td>
+                <td ng-show="a">
+                    <input type="text" ng-model="cus.Email" />
+                </td>
+                <td ng-hide="a">
+                    {{cus.Email}}
+                </td>
+                <td ng-show="a">
+                    <input type="text" ng-model="cus.PhoneNumber" />
+                </td>
+                <td ng-hide="a">
+                    {{cus.PhoneNumber}}
+                </td>
+                <td>
+                    <button class="btn btn-primary" ng-hide="a" ng-click="a=!a">Edit</button>
+                    
+                    <button class="btn btn-primary" ng-show="a" ng-click="updateCustomer(cus)">Update</button>
+                </td>
+                
+                <td>
+                    <button class="btn btn-primary" ng-show="a" ng-click="a=!a">Cancle</button>
+                    <button class="btn btn-primary" ng-hide="a" ng-click="deleteCustomer(cus, $index)" >Delete</button>
+                </td>
             </tr>
-
         </table>
     </div>
 </div>
-<script>
-    var app = angular.module("CustomerService", [])
-    app.controller("Customer", function ($scope, $http) {
-        $http.get("/Customers/GetAllCustomers").then(function (res) {
-            debugger;
-            $scope.items = res.data;
-        })
-        $scope.save = function () {
-            $scope.item;
-            debugger;
-            $http({
-                method: "POST",
-                url: "/Customers/Save",
-                data: $scope.item
-            }).success(function (res) {
-                console.log(res);
-            })
-        }
-    });
-</script>
+    </div>
+

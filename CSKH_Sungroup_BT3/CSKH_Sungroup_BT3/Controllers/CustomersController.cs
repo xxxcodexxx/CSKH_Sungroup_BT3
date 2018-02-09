@@ -17,48 +17,32 @@ namespace CSKH_Sungroup_BT3.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(db.Customers.ToList());
+            return View();
         }
 
         //GET : Customers using Json
         public JsonResult GetAllCustomers()
         {
-            var result = db.Customers.Select(x => 
-                new {
-                    x.Id,
-                    x.FirstName,
-                    x.LastName,
-                    x.Passport,
-                    x.PhoneNumber,
-                    x.Address,
-                    x.Email
 
-            }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+                List<Customer> cus = db.Customers.ToList();
+                return Json(cus, JsonRequestBehavior.AllowGet);
         }
 
 
         //Add new Customer
 
-        public JsonResult Save()
+        public JsonResult AddNewCustomer(Customer cus)
         {
-            string result = "";
-            Customer customer = new Customer();
-            customer.FirstName = Request["fName"];
-            customer.LastName = Request["lName"];
-            customer.Passport = int.Parse(Request["cmnd"]);
-            customer.PhoneNumber = int.Parse(Request["pNumber"]);
-            customer.Address = Request["address"];
-            customer.Email = Request["email"];
-            if (ModelState.IsValid)
+            if(cus != null)
             {
-                db.Customers.Add(customer);
+                db.Customers.Add(cus);
                 db.SaveChanges();
-                result = "Success";
+                return Json(cus, JsonRequestBehavior.AllowGet);
             }
             else
-                result = "Failed";
-            return Json(result, JsonRequestBehavior.AllowGet);
+            {
+                return Json("Some Error Occured");
+            }
         }
 
         // GET: Customers/Details/5
@@ -118,16 +102,20 @@ namespace CSKH_Sungroup_BT3.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Passport,Address,Email,PhoneNumber")] Customer customer)
+        public string UpdateCustomer(Customer cus)
         {
-            if (ModelState.IsValid)
+            if (cus != null)
             {
-                db.Entry(customer).State = EntityState.Modified;
+                Customer customer =  db.Customers.Where(x => x.Id == cus.Id).FirstOrDefault();
+                customer.Passport = cus.Passport;
+                customer.Email = cus.Email;
+                customer.Address = cus.Address;
+                customer.PhoneNumber = cus.PhoneNumber;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return "Customer updated";
             }
-            return View(customer);
+            return "somgthing went wrong.";
         }
 
         // GET: Customers/Delete/5
@@ -146,9 +134,8 @@ namespace CSKH_Sungroup_BT3.Controllers
         }
 
         // POST: Customers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult DeleteCustomer(int id)
         {
             Customer customer = db.Customers.Find(id);
             db.Customers.Remove(customer);
