@@ -6,219 +6,146 @@
 
 <h2>Căn hộ</h2>
 
-<div ng-controller="myCntrl" ng-app="myService">
-    
+
+
+<div class="content" ng-app="Apartments" ng-controller="ApartmentsCtrl">
     <div class="row">
         <div class="col-sm-4">
             <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm..." ng-model="search" />
         </div>
         <div class="col-sm-8">
             <div class="pull-right">
-                <button type="button" class="btn btn-warning"  data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>Thêm mới căn hộ</button>
+                <button type="button" class="btn btn-warning" data-target="#addNewApartments" data-toggle="modal"><i class="fa fa-plus"></i>Thêm mới căn hộ</button>
+                <button type="button" class="btn btn-primary" style="margin-left:15px" data-target="#sendMailToAllUsers" data-toggle="modal"><i class="fa fa-send"></i>Gửi mail cho khách hàng</button>
             </div>
         </div>
-        </div>
-   
-        @*<div ng-show="divApartment">*@
-
-            @*<p class="divHead">{{Action}} Apartment</p>
-            <table>
-                <tr>
-                    <td><b>Id</b></td>
-                    <td>
-                        <input type="text" disabled="disabled" ng-model="apartmentId" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>ApartmentName</b></td>
-                    <td>
-                        <input type="text" ng-model="apartmentApartmentName" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>Address</b></td>
-                    <td>
-                        <input type="text" ng-model="apartmentAddress" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>CustomerId</b></td>
-                    <td>
-                        <input type="text" ng-model="apartmentCustomerId" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>Price</b></td>
-                    <td>
-                        <input type="text" ng-model="apartmentPrice" />
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" class="btnAdd" value="Save" ng-click="AddUpdateApartment()" />
-                    </td>
-                </tr>
-            </table>*@
-
-    
-
-            <div id="myModal" class="modal fade"   role="dialog" >
+        <div class="modal fade" id="addNewApartments" role="dialog">
             <div class="modal-dialog">
-           
-                    <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4>Add Apartment</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                        <div class="col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-group">
-                                                <label>ID</label>
-                                                <input type="text" class="form-control" disabled="disabled" ng-model="apartmentId" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Tên căn hộ</label>
-                                                <input type="text" class="form-control" ng-model="apartmentApartmentName" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Địa chỉ</label>
-                                                <input type="text" class="form-control" ng-model="apartmentAddress" />
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-6">
-                                        
-                                            <div class="form-group">
-                                                <label>Giá</label>
-                                                <input type="text" class="form-control" ng-model="apartmentPrice" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Id Chủ nhà</label>
-                                                <select class="form-control" ng-model="apartmentCustomerId">
-                                                    <option ng-repeat="x in customers" value="{{x.Id}}">{{x.Id}}</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="pull-right">
-                                    <button  type="button" data-dismiss="modal" class="btn btn-secondary">Hủy</button>
-                                    <button  type="button" class="btn btn-primary" ng-click="AddApartment()" data-dismiss="modal">Lưu</button>
-                                </div>
-                            </div>
-                      
-                    </div>
-                </div>
-            </div>
-            
-        
-   
-    <div class="divList" style="margin-top:20px">
-        <div >
-            <table class="table table-striped">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Id)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ApartmentName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Address)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Status)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CustomerId)
-                    </th>
-                    <th>
-                        Thao tác
-                    </th>
-                </tr>
-
-                
-                <tr ng-repeat="apartment in apartments|filter : search" >
-                    <td>{{apartment.Id}}</td>
-                    <td>{{apartment.ApartmentName}}</td>  
-                    <td>{{apartment.Address}}</td>
-                    <td ng-if="apartment.Status==1" > Đã thuê </td>
-                    <td ng-if="apartment.Status==0"> Chưa thuê </td>
-                    <td>{{apartment.Price}}</td>
-                    <td>{{apartment.CustomerId}}</td>
-                    <td>
-                        <button type="button" class="btn btn-success" ng-click="editApartment(apartment)" data-target="#myModal1" data-toggle="modal">Sửa </button>
-                        <button type="button" class="btn btn-danger" ng-click="deleteApartment(apartment)">Xóa</button>
-                    </td>
-                </tr>
-
-            </table>
-        </div>
-
-    </div>
-    <div id="myModal1" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4>Edit Apartment</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>ID</label>
-                                <input type="text" class="form-control" disabled="disabled" ng-model="apartmentIdEdit" />
-                            </div>
-                            <div class="form-group">
-                                <label>Tên căn hộ</label>
-                                <input type="text" class="form-control" ng-model="apartmentApartmentNameEdit" />
-                            </div>
-                            <div class="form-group">
-                                <label>Địa chỉ</label>
-                                <input type="text" class="form-control" ng-model="apartmentAddressEdit" />
-                            </div>
-
+                <div class="modal-content">
+                    <form ng-submit="save()">
+                        <div class="modal-header">
+                            <button class="close" data-dissmiss="modal">×</button>
+                            <h4>Thêm mới căn hộ</h4>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Id Chủ nhà</label>
-                                <select class="form-control" ng-model="apartmentCustomerIdEdit">
-                                    <option ng-repeat="x in customers" value="{{x.Id}}" ng-selected="apartmentCustomerIdEdit">{{x.Id}}
-                                    </option>
-                                </select>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Tên căn hộ</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.ApartmentName" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Địa chỉ</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.Address" required />
+                                    </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label>Giá</label>
-                                <input type="text" class="form-control" ng-model="apartmentPriceEdit"  />
-                            </div>
-                            <div class="form-group">
-                                <label>Trạng thái</label>
-                                <input type="text" class="form-control" ng-if="apartmentStatusEdit== 1" ng-model="apartmentStatusEdit"  value="Đã thuê"/>
-                                <input type="text" class="form-control" ng-if="apartmentStatusEdit== 0" ng-model="apartmentStatusEdit"  value="Chưa thuê" />
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Id chủ sở hữu</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.CustomerId" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Giá</label>
+                                        <input type="text" class="form-control" ng-model="$scope.item.Price" required />
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
+                        <div class="modal-footer">
+                            <div class="pull-right">
+                                <button data-dissmiss="modal" class="btn btn-secondary">Hủy</button>
+                                <button type="submit" class="btn btn-primary">Tạo mới</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <div class="pull-right">
-                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy</button>
-                        <button type="button" class="btn btn-primary" ng-click="UpdateApartment()" data-dismiss="modal">Lưu</button>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
+    <div style="margin-top:20px">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApartmentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerId)
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @*@foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApartmentName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                        </td>
+                    </tr>
+                }*@
+            <tr ng-repeat="item in items|filter : search" ng-dblclick="edit({{item.Id}})">
+                <td>{{item.ApartmentName}}</td>
+                <td>{{item.Address}}</td>
+                <td>
+                    if {{item.Status}} == false then
+                    "Chưa thuê"
+                    else "Đã thuê"
+                </td>
+                <td>{{item.Price}}</td>
+                <td>{{item.CustomerId}}</td>
+                <td>@*<a ng-click="edit({{item.Id}})"><i class="fa fa-pencil"></i></a> <a ng-click="detail({{item.Id}})"><i class="fa fa-book"></i></a> <a ng-click="remove({{item.Id}})"><i class="fa fa-times"></i></a>*@</td>
+            </tr>
+
+        </table>
+    </div>
+
 </div>
-
-
+<script>
+    var app = angular.module("Apartments", [])
+    app.controller("ApartmentsCtrl", function ($scope, $http) {
+        $http.get("/Apartments/GetAllApartments").then(function (res) {
+            debugger;
+            $scope.items = res.data;
+        })
+        $scope.save = function () {
+            $scope.item;
+            debugger;
+            $http({
+                method: "POST",
+                url: "/Apartments/Save",
+                data: $scope.item
+            }).success(function (res) {
+                console.log(res);
+            })
+        }
+    });
+</script>
 
