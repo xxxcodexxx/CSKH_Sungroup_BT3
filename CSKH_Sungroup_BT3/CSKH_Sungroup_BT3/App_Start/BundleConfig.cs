@@ -35,7 +35,13 @@ namespace CSKH_Sungroup_BT3
                       "~/Scripts/AngularJs/CustomerController.js"));
             bundles.Add(new ScriptBundle("~/bundles/CustomerService").Include(
                       "~/Scripts/AngularJs/CustomerService.js"));
-            
+            bundles.Add(new ScriptBundle("~/bundles/ApartmentModule").Include(
+                    "~/Scripts/AngularJs/ApartmentModule.js"));
+            bundles.Add(new ScriptBundle("~/bundles/ApartmentService").Include(
+            "~/Scripts/AngularJs/ApartmentService.js"));
+            bundles.Add(new ScriptBundle("~/bundles/ApartmentController").Include(
+            "~/Scripts/AngularJs/ApartmentController.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/chartjs.min.js").Include(
                 "~/Scripts/ChartJS/Chart.min.js"));

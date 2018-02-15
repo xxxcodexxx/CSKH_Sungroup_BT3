@@ -20,6 +20,92 @@ namespace CSKH_Sungroup_BT3.Controllers
             return View(db.Apartments.ToList());
         }
 
+        //GET : Customers using Json
+
+
+
+        //Add new Customer
+
+        public JsonResult getAll()
+        {
+            {
+                var apartmentList = db.Apartments.ToList();
+                return Json(apartmentList, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult GetCustomerId()
+        {
+            {
+                var customerList = db.Customers.ToList();
+                return Json(customerList, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult getApartmentByNo(string apartNo)
+        {
+            
+            {
+                int no = Convert.ToInt32(apartNo);
+                var apartmentList = db.Apartments.Find(no);
+                return Json(apartmentList, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public string UpdateApartment(Apartment apart)
+        {
+            if (apart != null)
+            {
+                {
+                    int no = Convert.ToInt32(apart.Id);
+                    var apartmentList = db.Apartments.Where(x => x.Id == no).FirstOrDefault();
+                    apartmentList.ApartmentName = apart.ApartmentName;
+                    apartmentList.Address = apart.Address;
+                    apartmentList.Price = apart.Price;
+                    apartmentList.Status= apart.Status;
+                    apartmentList.CustomerId = apart.CustomerId;
+                    db.SaveChanges();
+                    return " Updated";
+                }
+            }
+            else
+            {
+                return "Invalid ";
+            }
+        }
+        public string AddApartment(Apartment apart)
+        {
+            if (apart != null)
+            {
+              
+                {
+                    db.Apartments.Add(apart);
+                    db.SaveChanges();
+                    return "Apartment Updated";
+                }
+            }
+            else
+            {
+                return "Invalid Apartment";
+            }
+        }
+
+        public string DeleteApartment(Apartment apart)
+        {
+            if (apart != null)
+            {
+                
+                {
+                    int no = Convert.ToInt32(apart.Id);
+                    var apartmentList = db.Apartments.Where(x => x.Id == no).FirstOrDefault();
+                    db.Apartments.Remove(apartmentList);
+                    db.SaveChanges();
+                    return "Apartment Deleted";
+                }
+            }
+            else
+            {
+                return "Invalid Apartment";
+            }
+        }
+
         // GET: Apartments/Details/5
         public ActionResult Details(int? id)
         {
