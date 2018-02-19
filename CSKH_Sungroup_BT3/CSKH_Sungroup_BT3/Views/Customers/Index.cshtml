@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-warning" data-target="#addNewCustomer" data-toggle="modal"><i class="fa fa-plus"></i>Thêm mới khách hàng</button>
+                        <button type="button"   ng-click="clearData(); Status=true" class="btn btn-warning" data-target="#addNewCustomer" data-toggle="modal"><i class="fa fa-plus"></i>Thêm mới khách hàng</button>
                         <button type="button" class="btn btn-primary" style="margin-left:15px" data-target="#sendMailToAllUsers" data-toggle="modal"><i class="fa fa-send"></i>Gửi mail cho khách hàng</button>
                     </div>
                 </div>
@@ -21,55 +21,46 @@
                         <div class="modal-content">
                             <form>
                                 <div class="modal-header">
-                                    <button class="close" data-dissmiss="modal">×</button>
+                                    <button class="close" data-dismiss="modal">×</button>
                                     <h4>Thêm mới khách hàng</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <div class="col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-group">
                                                 <label>Họ đệm</label>
-                                                <input type="text" class="form-control"  ng-model="customer.FirstName" required />
+                                                <input type="text" class="form-control"  ng-model="FirstName" required />
                                             </div>
                                             <div class="form-group">
                                                 <label>CMND/Hộ chiếu</label>
-                                                <input type="text" class="form-control"  ng-model="customer.Passport" required />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Tài khoản</label>
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Tên</label>
-                                                <input type="text" class="form-control"  ng-model="customer.LastName" required />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Đối tượng</label>
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control"  ng-model="Passport" required />
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="email" class="form-control" ng-model="customer.Email" required />
+                                                <input  type="email" class="form-control" ng-model="Email" required />
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Tên</label>
+                                                <input type="text" class="form-control" ng-model="LastName" required />
+                                            </div>
                                             <div class="form-group">
                                                 <label>Số điện thoại</label>
-                                                <input type="text" class="form-control" ng-model="customer.PhoneNumber" />
+                                                <input type="text" class="form-control" ng-model="PhoneNumber" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Địa chỉ</label>
-                                                <input type="text" class="form-control" ng-model="customer.Address" required />
+                                                <input type="text" class="form-control" ng-model="Address" required />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <div class="pull-right">
-                                        <button data-dissmiss="modal" class="btn btn-secondary">Hủy</button>
-                                        <button type="submit" class="btn btn-primary" ng-click="addCustomer(customer)">Tạo mới</button>
+                                        <button data-dismiss="modal" class="btn btn-secondary">Hủy</button>
+                                            <button ng-if="Status" type="submit" class="btn btn-primary" ng-click="addCustomer()">Tạo mới</button>
+                                            <button ng-if="Status==false" type="submit" class="btn btn-primary" ng-click="updateCustomer()">Lưu</button>
                                     </div>
                                 </div>
                             </form>
@@ -95,9 +86,6 @@
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.PhoneNumber)
-                        </th>
-                        <th>
-                            Thao tác
                         </th>
                     </tr>
                     <tr ng-repeat="cus in customers">
@@ -130,14 +118,14 @@
                             {{cus.PhoneNumber}}
                         </td>
                         <td>
-                            <button class="btn btn-primary" ng-hide="a" ng-click="a=!a">Edit</button>
+                            <button class="fa fa-edit" ng-hide="a" ng-click="editCustomer(cus)" data-target="#addNewCustomer" data-toggle="modal" ></button>
 
-                            <button class="btn btn-primary" ng-show="a" ng-click="updateCustomer(cus)">Update</button>
+                            <button class="fa fa-check-circle" ng-show="a" ng-click="updateCustomer(cus)"></button>
                         </td>
 
                         <td>
-                            <button class="btn btn-primary" ng-show="a" ng-click="a=!a">Cancle</button>
-                            <button class="btn btn-primary" ng-hide="a" ng-click="deleteCustomer(cus, $index)">Delete</button>
+                            <button class="fa fa-times" ng-show="a" ng-click="a=!a"></button>
+                            <button class="glyphicon glyphicon-trash" ng-hide="a" ng-click="deleteCustomer(cus, $index)"></button>
                         </td>
                     </tr>
                 </table>

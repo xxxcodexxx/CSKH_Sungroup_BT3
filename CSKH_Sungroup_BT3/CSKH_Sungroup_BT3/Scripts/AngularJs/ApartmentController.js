@@ -18,7 +18,7 @@
         var getData = myService.getCustomerId();
         debugger;
         getData.then(function (cus) {
-            $scope.customers = cus.data;
+            $scope.customers = cus.data;    
         }, function () {
             alert('Error in getting records');
         })

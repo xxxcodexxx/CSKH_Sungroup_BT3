@@ -57,7 +57,7 @@ namespace CSKH_Sungroup_BT3.Controllers
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return Json(customer, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Customers/Create
@@ -70,7 +70,6 @@ namespace CSKH_Sungroup_BT3.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Passport,Address,Email,PhoneNumber")] Customer customer)
         {
             if (ModelState.IsValid)
@@ -95,6 +94,7 @@ namespace CSKH_Sungroup_BT3.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(customer);
         }
 
@@ -111,6 +111,8 @@ namespace CSKH_Sungroup_BT3.Controllers
                 customer.Email = cus.Email;
                 customer.Address = cus.Address;
                 customer.PhoneNumber = cus.PhoneNumber;
+                customer.FirstName = cus.FirstName;
+                customer.LastName = cus.LastName;
                 db.SaveChanges();
 
                 return "Customer updated";

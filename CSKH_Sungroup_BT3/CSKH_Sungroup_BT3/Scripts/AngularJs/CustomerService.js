@@ -12,6 +12,10 @@
             dataType: "json"
         });
     };
+    //Editing customer
+    this.editCustomer = function (id) {
+        return $http.post("Customers/Edit/" + id)
+    }
     //Deleting customer
     this.deleteCustomer = function (id) {
         return $http.post("Customers/DeleteCustomer/" + id)
