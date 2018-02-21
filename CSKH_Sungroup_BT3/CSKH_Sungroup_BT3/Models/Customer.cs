@@ -20,8 +20,9 @@ namespace CSKH_Sungroup_BT3.Models
         [DisplayName("Tên")]
         public string LastName { get; set; }
 
+        [StringLength(30)]
         [DisplayName("CMND/Hộ chiếu")]
-        public int Passport { get; set; }
+        public string Passport { get; set; }
 
         [StringLength(200)]
         [DisplayName("Địa chỉ")]
@@ -29,7 +30,8 @@ namespace CSKH_Sungroup_BT3.Models
         
         public string Email { get; set; }
 
+        [StringLength(30)]
         [DisplayName("Số điện thoại")]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
