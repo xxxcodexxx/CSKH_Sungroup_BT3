@@ -25,6 +25,7 @@
                                     <h4>Thêm mới khách hàng</h4>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="alert-info"></div>
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-group">
@@ -88,7 +89,7 @@
                         </th>
                         <th></th>
                     </tr>
-                    <tr ng-repeat="cus in customers">
+                    <tr ng-repeat="cus in customers | filter : search">
                         <td>{{cus.FirstName}} {{cus.LastName}}</td>
                         <td>
                             {{cus.Passport}}
