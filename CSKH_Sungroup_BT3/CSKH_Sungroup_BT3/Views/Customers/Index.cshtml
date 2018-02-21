@@ -22,10 +22,11 @@
                             <form>
                                 <div class="modal-header">
                                     <button class="close" data-dismiss="modal">×</button>
-                                    <h4>Thêm mới khách hàng</h4>
+                                    <h4 ng-if="Status">Thêm mới khách hàng</h4>
+                                    <h4 ng-if="Status==false">Thông tin khách hàng {{FirstName}} {{LastName}}</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="alert-info"></div>
+                                    <div id="alert-info"></div>
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-group">
@@ -59,7 +60,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div class="pull-right">
-                                        <button data-dismiss="modal" class="btn btn-secondary">Hủy</button>
+                                            <button data-dismiss="modal" class="btn btn-secondary">Hủy</button>
                                             <button ng-if="Status" type="submit" class="btn btn-primary" ng-click="addCustomer()">Tạo mới</button>
                                             <button ng-if="Status==false" type="submit" class="btn btn-primary" ng-click="updateCustomer()">Lưu</button>
                                     </div>
@@ -89,7 +90,7 @@
                         </th>
                         <th></th>
                     </tr>
-                    <tr ng-repeat="cus in customers | filter : search">
+                    <tr ng-repeat="cus in customers | filter : search" ng-click="editCustomer(cus)" data-target="#addNewCustomer" data-toggle="modal">
                         <td>{{cus.FirstName}} {{cus.LastName}}</td>
                         <td>
                             {{cus.Passport}}

@@ -1,12 +1,10 @@
 ﻿
 app.controller("CustomerCtrl", function ($scope, CustomerService) {
 
-    
     $scope.customers = [];
     $scope.Status = true;
     GetCustomerList();
-    
-   
+
     // Clear data
     $scope.clearData = function () {
         $scope.FirstName = null;
@@ -24,6 +22,7 @@ app.controller("CustomerCtrl", function ($scope, CustomerService) {
             alert('Error in getting records');
         });
     }
+
     // Editing Customer
     $scope.editCustomer = function (customer) {
         CustomerService.editCustomer(customer.Id).then(function () {
@@ -50,18 +49,37 @@ app.controller("CustomerCtrl", function ($scope, CustomerService) {
         }
         CustomerService.addNewCustomer(customer).then(function (cus) {
             $scope.customers.push(cus);
+            $("#alert-info").removeClass("alert alert-danger");
+            $("#alert-info").removeClass("alert alert-success");
+            $("#alert-info").addClass("alert alert-success");
+            $("#alert-info").html("Thêm mới thành công");
+            setTimeout(function () {
+                $("#alert-info").removeClass("alert alert-danger");
+                $("#alert-info").removeClass("alert alert-success");
+                $("#alert-info").html("");
+            }, 2000)
             GetCustomerList();
         }, function () {
-            alert('Error in adding customer');
+            $("#alert-info").removeClass("alert alert-danger");
+            $("#alert-info").removeClass("alert alert-success");
+            $("#alert-info").addClass("alert alert-danger");
+            $("#alert-info").html("Thêm mới thất bại");
+            setTimeout(function () {
+                $("#alert-info").removeClass("alert alert-danger");
+                $("#alert-info").removeClass("alert alert-success");
+                $("#alert-info").html("");
+            }, 2000)
         });
     }
     //Delete customer
     $scope.deleteCustomer = function (customer, index) {
-        CustomerService.deleteCustomer(customer.Id).then(function () {
-            $scope.customers.splice(index, 1);
-        }, function () {
-            alert("something went wrong.");
-        });
+        if (confirm("Bạn muốn xóa khách hàng " + customer.FirstName + customer.LastName)) {
+            CustomerService.deleteCustomer(customer.Id).then(function () {
+                $scope.customers.splice(index, 1);
+            }, function () {
+                alert("something went wrong.");
+            });
+        }
     };
     //Updating customer
     $scope.updateCustomer = function () {
@@ -75,9 +93,26 @@ app.controller("CustomerCtrl", function ($scope, CustomerService) {
             Email: $scope.Email
         }
         CustomerService.updateCustomer(customer).then(function () {
+            $("#alert-info").removeClass("alert alert-danger");
+            $("#alert-info").removeClass("alert alert-success");
+            $("#alert-info").addClass("alert alert-success");
+            $("#alert-info").html("Sửa đổi thông tin thành công");
+            setTimeout(function () {
+                $("#alert-info").removeClass("alert alert-danger");
+                $("#alert-info").removeClass("alert alert-success");
+                $("#alert-info").html("");
+            }, 2000)
             GetCustomerList();
         }, function () {
-            alert("Error Update");
+            $("#alert-info").removeClass("alert alert-danger");
+            $("#alert-info").removeClass("alert alert-success");
+            $("#alert-info").addClass("alert alert-danger");
+            $("#alert-info").html("Thay đổi thông tin thất bại");
+            setTimeout(function () {
+                $("#alert-info").removeClass("alert alert-danger");
+                $("#alert-info").removeClass("alert alert-success");
+                $("#alert-info").html("");
+            }, 2000)
         });
     }
 });
