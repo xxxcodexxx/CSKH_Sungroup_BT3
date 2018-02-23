@@ -78,7 +78,7 @@ table tbody > tr > td, table tbody > tr > th{
     left:0;
     height:100%;
     width:100%;
-    background-image:url("https://creativetimofficial.github.io/material-dashboard-react/static/media/sidebar-4.c7736326.jpg");
+    background-image:url("../Content/Images/sidebar.jpg");
     background-size: cover;
     background-position: center center;
 }

@@ -90,7 +90,7 @@
                         </th>
                         <th></th>
                     </tr>
-                    <tr ng-repeat="cus in customers | filter : search" ng-click="editCustomer(cus)" data-target="#addNewCustomer" data-toggle="modal">
+                    <tr ng-repeat="cus in customers | filter : search">
                         <td>{{cus.FirstName}} {{cus.LastName}}</td>
                         <td>
                             {{cus.Passport}}
@@ -105,11 +105,14 @@
                             {{cus.PhoneNumber}}
                         </td>
                         <td>
-                            <a href="#editCustomer" class="btn btn-primary fa fa-edit" ng-click="editCustomer(cus)" data-target="#addNewCustomer" data-toggle="modal" ></a>
-                            <a href="#deleteCustomer" class="btn btn-danger fa fa-times" ng-click="deleteCustomer(cus, $index)"></a>
+                            <a href="#editCustomer" class="btn btn-primary" ng-click="editCustomer(cus)" data-target="#addNewCustomer" data-toggle="modal" ><i class="fa fa-edit"></i></a>
+                            <a href="#deleteCustomer" class="btn btn-danger" ng-click="deleteCustomer(cus, $index)"><i class="fa fa-times"></i></a>
                         </td>
                     </tr>
                 </table>
+                <ul class="pagination" data-ng-repeat="page in totalPages">
+                    <li><a href="#">{{page+1}}</a></li>
+                </ul>
             </div>
         </div>
     </div>

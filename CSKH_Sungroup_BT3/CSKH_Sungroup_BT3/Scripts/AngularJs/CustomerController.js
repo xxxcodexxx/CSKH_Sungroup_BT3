@@ -3,8 +3,11 @@ app.controller("CustomerCtrl", function ($scope, CustomerService) {
 
     $scope.customers = [];
     $scope.Status = true;
+    $scope.totalPages = 0;
+    $scope.currentPage = 0;
+    $scope.pageSize = 8;
     GetCustomerList();
-
+    
     // Clear data
     $scope.clearData = function () {
         $scope.FirstName = null;
@@ -17,7 +20,9 @@ app.controller("CustomerCtrl", function ($scope, CustomerService) {
     //Get all records
     function GetCustomerList() {
         CustomerService.getAllCustomers().then(function (cus) {
+            debugger;
             $scope.customers = cus.data;
+            $scope.totalPages = Math.ceil(cus.data.length / $scope.pageSize)
         },function () {
             alert('Error in getting records');
         });
