@@ -3,11 +3,10 @@ app.controller("CustomerCtrl", function ($scope, CustomerService) {
 
     $scope.customers = [];
     $scope.Status = true;
-    $scope.totalPages = 0;
     $scope.currentPage = 0;
-    $scope.pageSize = 8;
+    $scope.pageSize = 5;
     GetCustomerList();
-    
+
     // Clear data
     $scope.clearData = function () {
         $scope.FirstName = null;
