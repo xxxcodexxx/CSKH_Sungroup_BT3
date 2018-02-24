@@ -2,10 +2,18 @@
 app.controller("CustomerCtrl", function ($scope, CustomerService) {
 
     $scope.customers = [];
+    $scope.numberOfPages = [];
     $scope.Status = true;
     $scope.currentPage = 0;
     $scope.pageSize = 5;
     GetCustomerList();
+
+    //Pagination
+    //Set Page
+    $scope.setPage = function () {
+        $scope.currentPage = this.i - 1;
+    }
+
 
     // Clear data
     $scope.clearData = function () {
@@ -22,6 +30,9 @@ app.controller("CustomerCtrl", function ($scope, CustomerService) {
             debugger;
             $scope.customers = cus.data;
             $scope.totalPages = Math.ceil(cus.data.length / $scope.pageSize)
+            for (var i = 1; i <= $scope.totalPages; i++) {
+                $scope.numberOfPages.push(i);
+            }
         },function () {
             alert('Error in getting records');
         });
